@@ -1,9 +1,9 @@
 import React,{useState} from 'react'
 import { ToastContainer, Toast } from 'react-bootstrap'
 
-const ToastComponent = ({toast, setToast, toastText}) => {
+const ToastComponent = ({toastText}) => {
 
-    
+    const [toast, setToast] = useState(true)
 
   return (
     <ToastContainer className="p-3" position={"top-center"}>

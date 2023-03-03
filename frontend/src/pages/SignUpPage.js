@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { register } from "../apicalls/users";
 
 import registerSideImage from "../assets/images/registerSideImage.jpg";
 import ToastComponent from "../components/ToastComponent";
@@ -13,24 +14,50 @@ const SignUpPage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [toast, setToast] = useState(false);
   const [toastText, setToastText] = useState("");
+  const navigate = useNavigate();
 
-  const submitHandler = (e) => {
+  const submitHandler = async(e) => {
     e.preventDefault();
 
-    if (password === confirmPassword) {
-      setToastText("✅ Registered Successfully");
-      setToast(true);
-      console.log("Register Details:  ", {
-        name,
-        email,
-        password,
-        confirmPassword,
-      });
-    } else {
-      setToastText("❌ Password Mismatch");
-      setToast(true);
-      console.log("Password Mismatch");
+    // if (password === confirmPassword) {
+      // setToastText("✅ Registered Successfully");
+      // setToast(true);
+      // console.log("Register Details:  ", {
+      //   name,
+      //   email,
+      //   password,
+      //   confirmPassword,
+      // });
+
+
+    // } else {
+    //   setToastText("❌ Password Mismatch");
+    //   setToast(true);
+    //   console.log("Password Mismatch");
+    // }
+
+
+    try {
+      if (password === confirmPassword){
+        const response = await register({
+            name,
+            email,
+            password,
+          });
+
+          if(response.success){
+            setToastText(response.message)
+            navigate('/login')
+          }
+          else{
+            setToastText(response.message)
+          }
+      }
+
+    } catch (error) {
+      setToastText(error.message)
     }
+
   };
 
   return (
@@ -40,8 +67,6 @@ const SignUpPage = () => {
     >
       {toast && (
         <ToastComponent
-          toast={toast}
-          setToast={setToast}
           toastText={toastText}
         />
       )}

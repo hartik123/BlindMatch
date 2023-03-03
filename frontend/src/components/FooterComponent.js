@@ -35,10 +35,10 @@ const FooterComponent = () => {
         <Col md={3} className="mt-4">
         <h5>CONTACT</h5>
         <div>
-            <div><i class="ri-home-8-fill"></i> New York, NY 10012, US</div>
-            <div><i class="ri-mail-fill"></i> info@example.com</div>
-            <div><i class="ri-phone-fill"></i>+ 01 234 567 88</div>
-            <div><i class="ri-printer-fill"></i>+ 01 234 567 89</div>
+            <div><i className="ri-home-8-fill"></i> New York, NY 10012, US</div>
+            <div><i className="ri-mail-fill"></i> info@example.com</div>
+            <div><i className="ri-phone-fill"></i>+ 01 234 567 88</div>
+            <div><i className="ri-printer-fill"></i>+ 01 234 567 89</div>
         </div>
         </Col>
       </Row>
