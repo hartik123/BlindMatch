@@ -2,15 +2,17 @@ import React,{useState} from "react";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { login } from "../apicalls/users";
+import { message } from "antd"
 import loginSideImage from "../assets/images/loginSideImage.jpg";
-import ToastComponent from "../components/ToastComponent";
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 const LoginPage = () => {
-
+  AOS.init();
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [toast, setToast] = useState(false)
-  const [toastText, setToastText] = useState('')
+  // const [toast, setToast] = useState(false)
+  // const [toastText, setToastText] = useState('')
 
   const submitHandler = async(e) =>{
     try {
@@ -22,18 +24,18 @@ const LoginPage = () => {
     const response = await login({email, password})
     console.log(response.data)
       if(response.success){
-        setToastText("✅ Logged In Successfully")
+        // setToastText("✅ Logged In Successfully")
+        message.success(response.message)
         localStorage.setItem('token', response.data)
         window.location.href = '/home'
       }
       else{
-        setToastText(response.message)
+        // setToastText(response.message)
+        message.error(response.message)
       }
-      
-      
     } catch (error) {
-      setToastText(error.message)
-      
+      // setToastText(error.message)
+      message.error(error.message)
     }
   }
 
@@ -43,12 +45,12 @@ const LoginPage = () => {
       className="d-flex align-items-center"
       style={{ minHeight: "80vh", alignContent: "center" }}
     >
-      {toast && <ToastComponent  toastText={toastText}/>}
+      {/* {toast && <ToastComponent  toastText={toastText}/>} */}
       <Row gap={16} className="d-flex align-items-center py-auto">
-        <Col md={6}>
+        <Col md={6} data-aos="fade-right">
           <img src={loginSideImage} alt="loginSideImage" width={"90%"} />
         </Col>
-        <Col md={6}>
+        <Col md={6} data-aos="fade-left">
           <Form onSubmit={submitHandler}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>

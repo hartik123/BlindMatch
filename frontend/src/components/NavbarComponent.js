@@ -66,14 +66,19 @@ function NavbarComponent() {
       <Container>
         <Navbar.Brand>
           <LinkContainer to="/">
-            <Nav.Link to="/" active={pathname === "/" ? true : false}><img src={app_logo} width={50} height={50} /></Nav.Link>
+            <Nav.Link to="/" active={pathname === "/" ? true : false}><img src={app_logo} width={50} height={50} /> Website</Nav.Link>
           </LinkContainer>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto">
+            <LinkContainer to="/home">
+              <Nav.Link to="/home" active={pathname === "/home" ? true : false}>
+                Home
+              </Nav.Link>
+            </LinkContainer>
             {user ? (
-              user.name
+              <Nav.Link><i className="ri-user-line"></i> {user.name}</Nav.Link>
             ) : (
               <LinkContainer to="/login">
                 <Nav.Link
@@ -84,18 +89,13 @@ function NavbarComponent() {
                 </Nav.Link>
               </LinkContainer>
             )}
-            <LinkContainer to="/home">
-              <Nav.Link to="/home" active={pathname === "/home" ? true : false}>
-                Home
-              </Nav.Link>
-            </LinkContainer>
-
               {
                 user &&
                 <Nav.Link onClick={()=>{
                   localStorage.removeItem("token")
-                  navigate('/login')
-                }}>
+                  setUser()
+                  navigate('/')
+                }} className="btn btn-danger text-white mx-3">
                   Log out
                 </Nav.Link>
                 }

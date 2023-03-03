@@ -1,11 +1,14 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 const FooterComponent = () => {
+  AOS.init();
   return (
     <>
     <hr />
-    <Container className="text-center">
+    <Container className="text-center" data-aos="fade-up">
       <Row >
         <Col md={3} className="mt-4">
           <h5>WEBSITE</h5>

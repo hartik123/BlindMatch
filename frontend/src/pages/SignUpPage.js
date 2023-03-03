@@ -3,17 +3,19 @@ import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../apicalls/users";
-
+import { message } from 'antd'
 import registerSideImage from "../assets/images/registerSideImage.jpg";
-import ToastComponent from "../components/ToastComponent";
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 const SignUpPage = () => {
+  AOS.init();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [toast, setToast] = useState(false);
-  const [toastText, setToastText] = useState("");
+  // const [toast, setToast] = useState(false);
+  // const [toastText, setToastText] = useState("");
   const navigate = useNavigate();
 
   const submitHandler = async(e) => {
@@ -46,16 +48,19 @@ const SignUpPage = () => {
           });
 
           if(response.success){
-            setToastText(response.message)
+            // setToastText(response.message)
+            message.success(response.message)
             navigate('/login')
           }
           else{
-            setToastText(response.message)
+            // setToastText(response.message)
+            message.error(response.message)
           }
       }
 
     } catch (error) {
-      setToastText(error.message)
+      // setToastText(error.message)
+      message.error(error.message)
     }
 
   };
@@ -65,16 +70,16 @@ const SignUpPage = () => {
       className="d-flex align-items-center"
       style={{ minHeight: "80vh", alignContent: "center" }}
     >
-      {toast && (
+      {/* {toast && (
         <ToastComponent
           toastText={toastText}
         />
-      )}
+      )} */}
       <Row gap={16} className="d-flex align-items-center py-auto">
-        <Col md={6}>
+        <Col md={6} data-aos="fade-right">
           <img src={registerSideImage} alt="loginSideImage" width={"90%"} />
         </Col>
-        <Col md={6}>
+        <Col md={6} data-aos="fade-left">
           <Form onSubmit={submitHandler}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Name</Form.Label>

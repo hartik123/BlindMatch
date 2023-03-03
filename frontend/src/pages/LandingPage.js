@@ -6,10 +6,12 @@ import { Container, Row } from "react-bootstrap";
 import app_logo from "../assets/images/app-logo.jpg";
 import HomePageCard from "../components/HomePageCard";
 import landingBackground from "../assets/images/landingBackground.jpg";
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 const LandingPage = () => {
+  AOS.init();
   const navigate = useNavigate();
-
   return (
     <div
       style={{
@@ -26,7 +28,7 @@ const LandingPage = () => {
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
           backgroundSize: "cover",
-        }}
+        }} data-aos="fade-down"
       >
         <Container fluid={true} className="mt-5 text-center">
           <h2 className="mt-4">We are glad that we are supporting the community...</h2>

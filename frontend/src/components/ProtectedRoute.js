@@ -35,9 +35,7 @@ const ProtectedRoute = ({children}) => {
             }
         }
         else{
-
-            navigate('/login')
-            
+            navigate('/')
         }
     })
 
