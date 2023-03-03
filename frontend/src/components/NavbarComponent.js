@@ -1,70 +1,110 @@
 // import React from 'react'
 
 // const Navbar = () => {
-  //   return (
-    //     <div style={{ display: "flex", padding: "1rem 0" }}>
-    //         <div
-    //           style={{
-      //             width: "50%",
-      //             display: "flex",
-      //             justifyContent: "space-evenly",
-      //             alignItems: "center",
-      //           }}
-      //         >
-      //           <img src={app_logo} alt="Image" width="50" height="50" />
-      //           <div>Home</div>
-      //           <div>About</div>
-      //           <div>Services</div>
-      //           <div>Case Study</div>
-      //           <div>Contact</div>
-      //         </div>
-      //       </div>
-      //   )
-      // }
-      
-      
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import { LinkContainer } from 'react-router-bootstrap';
+//   return (
+//     <div style={{ display: "flex", padding: "1rem 0" }}>
+//         <div
+//           style={{
+//             width: "50%",
+//             display: "flex",
+//             justifyContent: "space-evenly",
+//             alignItems: "center",
+//           }}
+//         >
+//           <img src={app_logo} alt="Image" width="50" height="50" />
+//           <div>Home</div>
+//           <div>About</div>
+//           <div>Services</div>
+//           <div>Case Study</div>
+//           <div>Contact</div>
+//         </div>
+//       </div>
+//   )
+// }
 
+import { useEffect, useState } from "react";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import { LinkContainer } from "react-router-bootstrap";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import app_logo from "../assets/images/app-logo.jpg";
+import { userInfo } from "../apicalls/users";
 
 function NavbarComponent() {
+  const [user, setUser] = useState();
+  const [toastText, setToastText] = useState('');
+  const {pathname} = useLocation();
+  const navigate = useNavigate();
+
+  const getData = async () => {
+    try {
+      const response = await userInfo();
+      if (response.success) {
+        setUser(response.data);
+        console.log(user)
+        setToastText(response.message);
+      } else {
+        setToastText(response.message);
+        navigate("/login");
+      }
+    } catch (err) {
+      setToastText(err.message);
+      navigate("/login");
+    }
+  };
+
+  useEffect(() => {
+    if(localStorage.getItem('token')){
+      getData()
+    }
+  }, []);
+
   return (
     <Navbar collapseOnSelect expand="lg">
       <Container>
-        <Navbar.Brand><LinkContainer to="/"><img src={app_logo} width={50} height={50}/></LinkContainer></Navbar.Brand>
+        <Navbar.Brand>
+          <LinkContainer to="/">
+            <Nav.Link to="/" active={pathname === "/" ? true : false}><img src={app_logo} width={50} height={50} /></Nav.Link>
+          </LinkContainer>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto">
-          <LinkContainer to="/login"><Nav.Link>Log In</Nav.Link></LinkContainer>
-          <LinkContainer to="/signup"><Nav.Link>Sign Up</Nav.Link></LinkContainer>
-            {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown> */}
+            {user ? (
+              user.name
+            ) : (
+              <LinkContainer to="/login">
+                <Nav.Link
+                  to="/login"
+                  active={pathname === "/login" ? true : false}
+                >
+                  Log In
+                </Nav.Link>
+              </LinkContainer>
+            )}
+            <LinkContainer to="/home">
+              <Nav.Link to="/home" active={pathname === "/home" ? true : false}>
+                Home
+              </Nav.Link>
+            </LinkContainer>
 
-            {/* <Nav.Link href="#deets">More deets</Nav.Link>
-            <Nav.Link eventKey={2} href="#memes">
-              Dank memes
-            </Nav.Link> */}
+              {
+                user &&
+                <Nav.Link onClick={()=>{
+                  localStorage.removeItem("token")
+                  navigate('/login')
+                }}>
+                  Log out
+                </Nav.Link>
+                }
 
           </Nav>
-           
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
 }
 
-
-export default NavbarComponent
+export default NavbarComponent;
