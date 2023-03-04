@@ -6,7 +6,10 @@ const jwt = require("jsonwebtoken");
 const register = async (req, res) => {
   try {
     // check if user already exists
-    let user = await User.findOne({ email: req.body.email, mobile: req.body.mobile });
+    let user = await User.findOne({
+      email: req.body.email,
+      mobile: req.body.mobile,
+    });
     if (user) {
       return res.send({
         success: false,
@@ -137,6 +140,55 @@ const verify = async (req, res) => {
   }
 };
 
+const forgotPassword = async (req, res) => {
+  try {
+    let mobile = req.body.mobile;
+    let user = await User.findOne({
+      mobile: mobile,
+    });
+    if (user) {
+      var otp = Math.floor(1000 + Math.random() * 9000);
+      var response = await sendMobileOtp({ mobile: mobile, otp: otp });
+      user.mobOtp = response.config.params.variables_values;
+      return res.send({
+        success: true,
+        data: mobile,
+        message: "OTP sent!",
+      });
+    } else {
+      return res.send({
+        success: false,
+        data: null,
+        message: "Mobile No. not found!!",
+      });
+    }
+  } catch (error) {
+    res.send({
+      message: error.message,
+      data: error,
+      success: false,
+    });
+  }
+};
+
+const changePassword = async (req, res) => {
+  try {
+    let mobile = req.body.mobile;
+    let user = await User.findOne({
+      mobile: mobile,
+    });
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(req.body.newPassword, salt);
+    await user.save();
+  } catch (error) {
+    res.send({
+      message: error.message,
+      data: error,
+      success: false,
+    });
+  }
+};
+
 const getUserInfo = async (req, res) => {
   try {
     const user = await User.findById(req.body.userid);
@@ -159,5 +211,7 @@ module.exports = {
   register,
   login,
   verify,
+  forgotPassword,
+  changePassword,
   getUserInfo,
 };
