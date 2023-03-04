@@ -6,7 +6,8 @@ const {
   register,
   verify,
   forgotPassword,
-  changePassword,
+  checkOtp,
+  resetPassword,
   getUserInfo,
 } = require("../controllers/userControllers");
 const authMiddleware = require("../middlewares/authMiddleware");
@@ -15,8 +16,8 @@ router.post("/login", login);
 router.post("/register", register);
 router.post("/verify", verify);
 router.post("/forgotPassword", forgotPassword);
-router.post("/changePassword", changePassword);
-
+router.post("/checkOtp", checkOtp);
+router.post("/resetPassword", resetPassword);
 router.get("/getuserinfo", authMiddleware, getUserInfo);
 
 module.exports = router;

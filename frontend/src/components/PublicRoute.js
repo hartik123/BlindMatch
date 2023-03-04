@@ -8,7 +8,7 @@ const PublicRoute = ({children}) => {
         if(localStorage.getItem('token')){
             navigate('/home')
         }
-    },[])
+    })
 
   return (
     <div>{children}</div>

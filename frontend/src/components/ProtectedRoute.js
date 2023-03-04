@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import { userInfo } from '../apicalls/users';
@@ -51,7 +51,7 @@ const ProtectedRoute = ({children}) => {
         if(reloadUser){
          getData()
         }
-     },[reloadUser])
+     })
 
   return (
     user && <div>{children}</div>

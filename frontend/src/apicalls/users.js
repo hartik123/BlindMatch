@@ -39,3 +39,33 @@ export const verify = async(payload)=>{
         return error.response.data
     }
 }
+
+export const forgotPassword = async(payload)=>{
+    try {
+        const response = await axiosInstance.post('/api/users/forgotPassword',payload)
+        return response.data
+        
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export const checkOtp = async(payload)=>{
+    try {
+        const response = await axiosInstance.post('/api/users/checkOtp',payload)
+        return response.data
+        
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export const resetPassword = async(payload)=>{
+    try {
+        const response = await axiosInstance.post('/api/users/resetPassword',payload)
+        return response.data
+        
+    } catch (error) {
+        return error.response.data
+    }
+}

@@ -1,67 +1,48 @@
-// import React from 'react'
-
-// const Navbar = () => {
-//   return (
-//     <div style={{ display: "flex", padding: "1rem 0" }}>
-//         <div
-//           style={{
-//             width: "50%",
-//             display: "flex",
-//             justifyContent: "space-evenly",
-//             alignItems: "center",
-//           }}
-//         >
-//           <img src={app_logo} alt="Image" width="50" height="50" />
-//           <div>Home</div>
-//           <div>About</div>
-//           <div>Services</div>
-//           <div>Case Study</div>
-//           <div>Contact</div>
-//         </div>
-//       </div>
-//   )
-// }
-
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import { LinkContainer } from "react-router-bootstrap";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import app_logo from "../assets/images/app-logo.jpg";
-import { userInfo } from "../apicalls/users";
-import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useNavigate } from "react-router-dom";
+import app_logo from "../assets/images/app-logo.png";
+import { useDispatch, useSelector } from "react-redux";
 import { SetInitialUser } from "../redux/usersSlice";
 
 function NavbarComponent() {
-  // const [user, setUser] = useState();
-  // const [toastText, setToastText] = useState('');
-  const {pathname} = useLocation();
+
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {user} = useSelector(state=>state.users);
-  useEffect(() => {
-  }, [user]);
+  const { user } = useSelector((state) => state.users);
+  useEffect(() => {}, [user]);
 
   return (
-    <Navbar collapseOnSelect expand="lg">
+    <Navbar collapseOnSelect expand="lg"  style={{
+      boxShadow: "0 2px 4px 0 rgba(0,0,0,.4)",
+    }}>
       <Container>
         <Navbar.Brand>
           <LinkContainer to="/">
-            <Nav.Link to="/" active={pathname === "/" ? true : false}><img src={app_logo} width={50} height={50} />BlindMatch</Nav.Link>
+            <Nav.Link to="/" active={pathname === "/" ? true : false}>
+              <img src={app_logo} width={50} height={50} className="mx-2" alt="App_Logo"/>
+              BlindMatch
+            </Nav.Link>
           </LinkContainer>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="ms-auto">
+          <Nav
+            className="ms-auto"
+          >
             <LinkContainer to="/home">
               <Nav.Link to="/home" active={pathname === "/home" ? true : false}>
                 Home
               </Nav.Link>
             </LinkContainer>
             {user ? (
-              <Nav.Link><i className="ri-user-line"></i> {user.name}</Nav.Link>
+              <Nav.Link>
+                <i className="ri-user-line"></i> {user.name}
+              </Nav.Link>
             ) : (
               <LinkContainer to="/login">
                 <Nav.Link
@@ -72,17 +53,18 @@ function NavbarComponent() {
                 </Nav.Link>
               </LinkContainer>
             )}
-              {
-                user &&
-                <Nav.Link onClick={()=>{
-                  localStorage.removeItem("token")
-                  dispatch(SetInitialUser())
-                  navigate('/')
-                }} className="btn btn-danger text-white mx-3">
-                  Log out
-                </Nav.Link>
-                }
-
+            {user && (
+              <Nav.Link
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  dispatch(SetInitialUser());
+                  navigate("/");
+                }}
+                className="btn btn-danger text-white mx-3"
+              >
+                Log out
+              </Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

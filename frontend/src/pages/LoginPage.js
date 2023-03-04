@@ -1,86 +1,118 @@
-import React,{useState} from "react";
-import { Container, Col, Row, Form, Button } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
+import React, { useState } from "react";
+import { Container, Form } from "react-bootstrap";
 import { login } from "../apicalls/users";
-import { message } from "antd"
-import { useSelector, useDispatch } from 'react-redux';
-import { HideLoading, ShowLoading } from '../redux/loadersSlice';
-import loginSideImage from "../assets/images/loginSideImage.jpg";
-import AOS from 'aos'
-import 'aos/dist/aos.css'
+import { message } from "antd";
+import loginVector from "../assets/images/loginVector.jpg";
+import loginBackgroundImage from "../assets/images/loginBackground.jpg";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
-
-const LoginPage = () => {
+const LoginPage = (props) => {
   AOS.init();
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  // const [toast, setToast] = useState(false)
-  // const [toastText, setToastText] = useState('')
-  const dispatch = useDispatch()
-  const submitHandler = async(e) =>{
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+ 
+  const submitHandler = async (e) => {
     try {
-    // setToastText("✅ Logged In Successfully")
-    // setToast(true)
-    // console.log("Login Details:  ", {userName, password})
-    e.preventDefault()
-    dispatch(ShowLoading())
-    const response = await login({email, password})
-    dispatch(HideLoading())
-      if(response.success){
-        // setToastText("✅ Logged In Successfully")
-        message.success(response.message)
-        localStorage.setItem('token', response.data)
-        window.location.href = '/home'
-      }
-      else{
-        // setToastText(response.message)
-        message.error(response.message)
+      e.preventDefault();
+      props.setProgress(30)
+      const response = await login({ email, password });
+      props.setProgress(100)
+      if (response.success) {
+        message.success(response.message);
+        localStorage.setItem("token", response.data);
+        window.location.href = "/home";
+      } else {        
+        message.error(response.message);
       }
     } catch (error) {
-      // setToastText(error.message)
-      dispatch(HideLoading())
-      message.error(error.message)
+      message.error(error.message);
     }
-  }
-
+  };
 
   return (
     <Container
-      className="d-flex align-items-center"
-      style={{ minHeight: "80vh", alignContent: "center" }}
+      className="d-flex align-items-center m-0 p-0"
+      id="loginBackground"
+      style={{
+        minHeight: "80vh",
+        minWidth: "100%",
+        position: "relative",
+        alignContent: "center",
+        background: `url(${loginBackgroundImage})`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+      }}
     >
-      {/* {toast && <ToastComponent  toastText={toastText}/>} */}
-      <Row gap={16} className="d-flex align-items-center py-auto">
-        <Col md={6} data-aos="fade-right">
-          <img src={loginSideImage} alt="loginSideImage" width={"90%"} />
-        </Col>
-        <Col md={6} data-aos="fade-left">
-          <Form onSubmit={submitHandler}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" value={email} required={true} onChange={(e)=>setEmail(e.target.value)}/>
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" value={password} required={true} onChange={(e)=>setPassword(e.target.value)}/>
-            </Form.Group>
-
-            <Row>
-              <Col md={6}>
-                <Button variant="success" type="submit" size="lg">
-                  Log in
-                </Button>
-              </Col>
-              <Col md={6}>
-                <LinkContainer to="/signup">
-                  <div className="login-signup cursor-pointer mt-2" >Not a member? Register here. </div>
-                </LinkContainer>
-              </Col>
-            </Row>
-          </Form>
-        </Col>
-      </Row>
+      <div
+        style={{
+          backgroundColor: "rgba(0, 0, 0, 0.8)",
+          top: "0",
+          left: "0",
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          zIndex: "1",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <div
+          className="card my-5 mx-2"
+          style={{ width: "600px", maxWidth: "80vw", maxHeight:"100vh" }}
+        >
+          <div className="card-body text-center my-4 mt-0 mt-sm-4">
+            <div className="row">
+              <div className="col-12 col-sm-5 d-block px-3">
+                <img className="sideVector" src={loginVector} alt="" width="210px" height="240px" />
+              </div>
+              <div
+                className="col-12 col-sm-7"
+                style={{ borderLeft: "1px solid lightgrey", height: "120%" }}
+              >
+                <h5 className="mb-4">
+                  <b>Login</b>
+                </h5>
+                <Form onSubmit={submitHandler}>
+                  <div className="mb-3 text-start">
+                    <input
+                      type="email"
+                      className="form-control"
+                      placeholder="Enter Email"
+                      value={email}
+                      required={true}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+                  <div className="mb-3 text-start">
+                    <input
+                      type="password"
+                      className="form-control"
+                      placeholder="Password"
+                      value={password}
+                      required={true}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="btn btn-outline-dark shadow-2 mt-3 mb-4 w-75"
+                  >
+                    Submit
+                  </button>
+                </Form>
+                <p className="mb-2 text-muted">
+                  Forgot password? <a href="/forgotPassword"> Reset</a>
+                </p>
+                <p className="mb-0 text-muted">
+                  Don't have account yet? <a href="/signUp">Signup</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </Container>
   );
 };
