@@ -11,43 +11,41 @@ const FooterComponent = () => {
     <Container className="text-center" data-aos="fade-up">
       <Row >
         <Col md={3} className="mt-4">
-          <h5>WEBSITE</h5>
+          <h5>BLIND MATCH</h5>
           <div>
             Here you can use rows and columns to organize your footer content.
             Lorem ipsum dolor sit amet, consectetur adipisicing elit.
           </div>
         </Col>
         <Col md={3} className="mt-4">
-          <h5>PRODUCTS</h5>
+          <h5>Quick Links</h5>
           <div>
-            <div>Angular</div>
-            <div>Vuew</div>
-            <div>React JS</div>
-            <div>Laravel</div>
+            <div>Partner Dashboard</div>
+            <div>Play Store</div>
+            <div>App Store</div>
           </div>
         </Col>
         <Col md={3} className="mt-4">
-        <h5>USEFUL LINKS</h5>
+        <h5>Legal</h5>
         <div>
-            <div>Pricing</div>
-            <div>Settings</div>
-            <div>Order</div>
-            <div>Help</div>
+            <div>Terms</div>
+            <div>Privacy Policy</div>
         </div>
         </Col>
         <Col md={3} className="mt-4">
-        <h5>CONTACT</h5>
+        <h5>Social</h5>
         <div>
-            <div><i className="ri-home-8-fill"></i> New York, NY 10012, US</div>
-            <div><i className="ri-mail-fill"></i> info@example.com</div>
-            <div><i className="ri-phone-fill"></i>+ 01 234 567 88</div>
-            <div><i className="ri-printer-fill"></i>+ 01 234 567 89</div>
+            <div><i class="ri-facebook-box-fill"></i> Facebook</div>
+            <div><i class="ri-twitter-fill"></i> Twitter</div>
+            <div><i class="ri-instagram-fill"></i> Instagram</div>
+            <div><i class="ri-youtube-fill"></i> Youtube</div>
+            <div> <i class="ri-linkedin-box-fill"></i> LinkedIn</div>
         </div>
         </Col>
       </Row>
       <hr />
       <Row className="text-center mb-3">
-        <div> &copy; 2023 Copyright: Website.com</div>
+        <div> &copy; 2023 Copyright: Blindmatch.com</div>
       </Row>
     </Container>
     </>

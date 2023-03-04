@@ -1,45 +1,33 @@
 import React, { useState } from "react";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { register } from "../apicalls/users";
 import { message } from 'antd'
 import registerSideImage from "../assets/images/registerSideImage.jpg";
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import ModalComponent from "../components/ModalComponent";
 
 const SignUpPage = () => {
+
+  
   AOS.init();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  // const [toast, setToast] = useState(false);
-  // const [toastText, setToastText] = useState("");
+  const [modalShow, setModalShow] = React.useState(false);
+  const [name, setName] = useState("hartik");
+  const [email, setEmail] = useState("hartik@gmail.com");
+  const [phoneno, setPhoneno] = useState(63477);
+  const [password, setPassword] = useState("1234");
+  const [confirmPassword, setConfirmPassword] = useState("1234");
   const navigate = useNavigate();
 
-  const submitHandler = async(e) => {
-    e.preventDefault();
-
-    // if (password === confirmPassword) {
-      // setToastText("✅ Registered Successfully");
-      // setToast(true);
-      // console.log("Register Details:  ", {
-      //   name,
-      //   email,
-      //   password,
-      //   confirmPassword,
-      // });
-
-
-    // } else {
-    //   setToastText("❌ Password Mismatch");
-    //   setToast(true);
-    //   console.log("Password Mismatch");
-    // }
-
+  const submitHandler = async (e) => {
 
     try {
+      e.preventDefault();
+
+      //Setting Model
+
       if (password === confirmPassword){
         const response = await register({
             name,
@@ -48,14 +36,13 @@ const SignUpPage = () => {
           });
 
           if(response.success){
-            // setToastText(response.message)
             message.success(response.message)
             navigate('/login')
           }
           else{
-            // setToastText(response.message)
             message.error(response.message)
           }
+        console.log(modalShow)
       }
 
     } catch (error) {
@@ -75,6 +62,8 @@ const SignUpPage = () => {
           toastText={toastText}
         />
       )} */}
+
+
       <Row gap={16} className="d-flex align-items-center py-auto">
         <Col md={6} data-aos="fade-right">
           <img src={registerSideImage} alt="loginSideImage" width={"90%"} />
@@ -89,6 +78,18 @@ const SignUpPage = () => {
                 value={name}
                 required={true}
                 onChange={(e) => setName(e.target.value)}
+              />
+              <Form.Text className="text-muted"></Form.Text>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Phone Number</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Enter phone no"
+                value={phoneno}
+                required={true}
+                onChange={(e) => setPhoneno(e.target.value)}
               />
               <Form.Text className="text-muted"></Form.Text>
             </Form.Group>
@@ -129,7 +130,10 @@ const SignUpPage = () => {
 
             <Row>
               <Col md={6}>
-                <Button variant="danger" type="submit" size="lg">
+                <Button variant="danger" type="submit" size="lg" onClick={()=>{
+                  setModalShow(true);
+                  submitHandler();
+                }}>
                   Register
                 </Button>
               </Col>
@@ -142,6 +146,11 @@ const SignUpPage = () => {
           </Form>
         </Col>
       </Row>
+      
+      <ModalComponent
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
     </Container>
   );
 };

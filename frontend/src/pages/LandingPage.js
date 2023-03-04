@@ -5,11 +5,31 @@ import { Container, Row } from "react-bootstrap";
 
 import app_logo from "../assets/images/app-logo.jpg";
 import HomePageCard from "../components/HomePageCard";
-import landingBackground from "../assets/images/landingBackground.jpg";
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import landingBackgroundImage from '../assets/images/landingBackground.gif';
+import Safety from '../assets/landingPageImage/safety.png'
+import Smart from '../assets/landingPageImage/smart.png'
+import Need from '../assets/landingPageImage/need.png'
+import Catify from '../assets/landingPageImage/catify.png'
+
 
 const LandingPage = () => {
+
+  const cardData = [{
+    img: Safety
+  },
+  {
+    img: Smart
+  },
+  {
+    img: Need
+  },
+  {
+    img: Catify
+  }
+]
+
   AOS.init();
   const navigate = useNavigate();
   return (
@@ -24,7 +44,7 @@ const LandingPage = () => {
           height: "100%",
           display: "flex",
           justifyContent: "center",
-          backgroundImage: "url(/landingBackground.jpg)",
+          backgroundImage: `url(${landingBackgroundImage})`,
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
           backgroundSize: "cover",
@@ -47,8 +67,8 @@ const LandingPage = () => {
 
       <Container className="text-center">
         <Row>
-          {[1, 2, 3].map((ele, idx) => {
-            return <HomePageCard key={idx} />;
+          {cardData.map((ele, idx) => {
+            return <HomePageCard key={idx} image={ele.img}/>;
           })}
         </Row>
       </Container>
