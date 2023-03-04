@@ -4,14 +4,22 @@ const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     mobOtp: { type: Number, required: false },
-    email: {type:String, required: true},
-    password: {type:String, required: true},
-    isAdmin: {type:Boolean, default: false, required:true},
-    phoneno: {type: Number, required: true},
-    isVerified: {type:Boolean, default: false, required: true}
-}, {
-    timestamps: true
-})
+    email: { type: String, required: true },
+    password: { type: String, required: true },
+    isAdmin: { type: Boolean, default: false, required: true },
+    phoneno: { type: Number, required: true },
+    isVerified: { type: Boolean, default: false, required: true },
+    image: {
+      type: String,
+      default: "",
+      required: false,
+    },
+    gender: { type: String, required: false, default: "" },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 const userModel = mongoose.model("users", userSchema);
 

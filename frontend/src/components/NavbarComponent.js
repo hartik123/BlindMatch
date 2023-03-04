@@ -49,7 +49,7 @@ function NavbarComponent() {
       <Container>
         <Navbar.Brand>
           <LinkContainer to="/">
-            <Nav.Link to="/" active={pathname === "/" ? true : false}><img src={app_logo} width={50} height={50} /> BLIND MATCH </Nav.Link>
+            <Nav.Link to="/" active={pathname === "/" ? true : false}><i class="ri-message-3-line "></i> BLIND MATCH </Nav.Link>
           </LinkContainer>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
