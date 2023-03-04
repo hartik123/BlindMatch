@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import { getAllUsers, userInfo } from '../apicalls/users';
 import { message } from 'antd';
-import { SetUser, ReloadUser, SetAllUsers } from '../redux/usersSlice';
+import { SetUser, ReloadUser, SetAllUsers, SetAllChats } from '../redux/usersSlice';
 import { HideLoading, ShowLoading } from '../redux/loadersSlice';
+import { getAllChatsByUser } from '../apicalls/chats';
 
 
 const ProtectedRoute = ({children}) => {
@@ -18,11 +19,13 @@ const ProtectedRoute = ({children}) => {
             dispatch(ShowLoading())
             const response = await userInfo()
             const allUsersResponses = await getAllUsers()
+            const allChatsResponses = await getAllChatsByUser()
             dispatch(HideLoading())
 
             if(response.success){
                 dispatch(SetUser(response.data));
                 dispatch(SetAllUsers(allUsersResponses.data))
+                dispatch(SetAllChats(allChatsResponses.data))
                 message.success(response.message);
             }
             else{

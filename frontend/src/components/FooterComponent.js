@@ -35,11 +35,11 @@ const FooterComponent = () => {
         <Col md={3} className="mt-4">
         <h5>Social</h5>
         <div>
-            <div><i class="ri-facebook-box-fill"></i> Facebook</div>
-            <div><i class="ri-twitter-fill"></i> Twitter</div>
-            <div><i class="ri-instagram-fill"></i> Instagram</div>
-            <div><i class="ri-youtube-fill"></i> Youtube</div>
-            <div> <i class="ri-linkedin-box-fill"></i> LinkedIn</div>
+            <div><i className="ri-facebook-box-fill"></i> Facebook</div>
+            <div><i className="ri-twitter-fill"></i> Twitter</div>
+            <div><i className="ri-instagram-fill"></i> Instagram</div>
+            <div><i className="ri-youtube-fill"></i> Youtube</div>
+            <div> <i className="ri-linkedin-box-fill"></i> LinkedIn</div>
         </div>
         </Col>
       </Row>
