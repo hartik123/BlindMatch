@@ -102,3 +102,19 @@
 .mt-2{
     margin-top: 20px;
 }
+
+.rounded-full{
+    border-radius: 9999px
+}
+
+.w-full{
+    width: 100%;
+}
+
+.absolute{
+    position: absolute;
+}
+
+.top-2{
+    top: 0.5rem;
+}

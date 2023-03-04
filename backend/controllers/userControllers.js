@@ -211,6 +211,37 @@ const getUserInfo = async (req, res) => {
   }
 };
 
+const getAllUsers = async(req, res)=>{
+  try {
+    const allUsers = await User.find({_id: {
+      $ne: req.body.userid
+    }})
+
+    if(allUsers){
+      res.send({
+        message: "Users fetched successfully",
+        success: true,
+        data: allUsers
+      })
+    }
+    else{
+      res.send({
+        message: "No Users to display",
+        success: false,
+        data: null
+      })
+    }
+
+
+  } catch (error) {
+    res.send({
+      message: error.message,
+      success: false,
+      data: error
+    })
+  }
+}
+
 module.exports = {
   register,
   login,
@@ -218,4 +249,5 @@ module.exports = {
   forgotPassword,
   changePassword,
   getUserInfo,
+  getAllUsers
 };

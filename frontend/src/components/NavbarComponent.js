@@ -32,7 +32,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import app_logo from "../assets/images/app-logo.jpg";
 import { userInfo } from "../apicalls/users";
 import { useDispatch, useSelector } from 'react-redux'
-import { SetInitialUser } from "../redux/usersSlice";
+import { SetAllUsersInitial, SetInitialUser } from "../redux/usersSlice";
 
 function NavbarComponent() {
   // const [user, setUser] = useState();
@@ -77,6 +77,7 @@ function NavbarComponent() {
                 <Nav.Link onClick={()=>{
                   localStorage.removeItem("token")
                   dispatch(SetInitialUser())
+                  dispatch(SetAllUsersInitial())
                   navigate('/')
                 }} className="btn btn-danger text-white mx-3">
                   Log out

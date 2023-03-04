@@ -21,3 +21,11 @@
 .bg-error{
     background-color: var(--warning);
 }
+
+.border-gray-500{
+    border-color: rgb(107 114 128);
+}
+
+.bg-gray-500{
+    background-color: rgb(107 114 128);
+}

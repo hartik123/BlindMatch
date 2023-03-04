@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import {useNavigate} from 'react-router-dom';
-import { userInfo } from '../apicalls/users';
+import { getAllUsers, userInfo } from '../apicalls/users';
 import { message } from 'antd';
-import { SetUser, ReloadUser } from '../redux/usersSlice';
+import { SetUser, ReloadUser, SetAllUsers } from '../redux/usersSlice';
 import { HideLoading, ShowLoading } from '../redux/loadersSlice';
 
 
@@ -17,9 +17,12 @@ const ProtectedRoute = ({children}) => {
         try{
             dispatch(ShowLoading())
             const response = await userInfo()
+            const allUsersResponses = await getAllUsers()
             dispatch(HideLoading())
+
             if(response.success){
                 dispatch(SetUser(response.data));
+                dispatch(SetAllUsers(allUsersResponses.data))
                 message.success(response.message);
             }
             else{
@@ -35,7 +38,6 @@ const ProtectedRoute = ({children}) => {
         }
     }
 
-
     useEffect(()=>{
         if(localStorage.getItem('token')){
             if(!user){
@@ -45,7 +47,7 @@ const ProtectedRoute = ({children}) => {
         else{
             navigate('/')
         }
-    })
+    }, [])
 
     useEffect(()=>{
         if(reloadUser){
