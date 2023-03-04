@@ -138,6 +138,61 @@ const verify = async (req, res) => {
   }
 };
 
+const forgotPassword = async (req, res) => {
+  try {
+    let phoneno = req.body.phoneno;
+    let user = await User.findOne({
+      phoneno: phoneno,
+    });
+    if (user) {
+      var otp = Math.floor(1000 + Math.random() * 9000);
+      var response = await sendMobileOtp({ phoneno: phoneno, otp: otp });
+      user.mobOtp = response.config.params.variables_values;
+      user.save();
+      return res.send({
+        success: true,
+        data: phoneno,
+        message: "OTP sent!",
+      });
+    } else {
+      return res.send({
+        success: false,
+        data: null,
+        message: "Mobile No. not found!!",
+      });
+    }
+  } catch (error) {
+    res.send({
+      message: error.message,
+      data: error,
+      success: false,
+    });
+  }
+};
+
+const changePassword = async (req, res) => {
+  try {
+    let phoneno = req.body.phoneno;
+    let user = await User.findOne({
+      phoneno: phoneno,
+    });
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(req.body.newPassword, salt);
+    await user.save();
+    res.send({
+      message: "Password changed successfully",
+      success: true,
+      data: null,
+    });
+  } catch (error) {
+    res.send({
+      message: error.message,
+      data: error,
+      success: false,
+    });
+  }
+};
+
 const getUserInfo = async (req, res) => {
   try {
     const user = await User.findById(req.body.userid);
@@ -160,5 +215,7 @@ module.exports = {
   register,
   login,
   verify,
+  forgotPassword,
+  changePassword,
   getUserInfo,
 };
