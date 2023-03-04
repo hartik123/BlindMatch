@@ -8,9 +8,12 @@ import registerSideImage from "../assets/images/registerSideImage.jpg";
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import ModalComponent from "../components/ModalComponent";
+import { useDispatch } from 'react-redux';
+import { HideLoading, ShowLoading } from '../redux/loadersSlice';
+
 
 const SignUpPage = () => {
-
+   
   
   AOS.init();
   const [modalShow, setModalShow] = useState(false);
@@ -21,19 +24,20 @@ const SignUpPage = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [userId, setUserId] = useState('');
   const navigate = useNavigate();
-
+  const dispatch = useDispatch()
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
       //Setting Model
       if (password === confirmPassword){
+        dispatch(ShowLoading())
         const response = await register({
             name,
             email,
             password,
             phoneno
           });
-
+          dispatch(HideLoading())
           if(response.success){
             message.success(response.message)
             console.log(response.data)
@@ -48,6 +52,7 @@ const SignUpPage = () => {
 
     } catch (error) {
       // setToastText(error.message)
+      dispatch(HideLoading())
       message.error(error.message)
     }
 

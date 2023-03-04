@@ -3,9 +3,12 @@ import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { login } from "../apicalls/users";
 import { message } from "antd"
+import { useSelector, useDispatch } from 'react-redux';
+import { HideLoading, ShowLoading } from '../redux/loadersSlice';
 import loginSideImage from "../assets/images/loginSideImage.jpg";
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+
 
 const LoginPage = () => {
   AOS.init();
@@ -13,16 +16,16 @@ const LoginPage = () => {
   const [password, setPassword] = useState('')
   // const [toast, setToast] = useState(false)
   // const [toastText, setToastText] = useState('')
-
+  const dispatch = useDispatch()
   const submitHandler = async(e) =>{
     try {
-      e.preventDefault()
     // setToastText("✅ Logged In Successfully")
     // setToast(true)
     // console.log("Login Details:  ", {userName, password})
-
+    e.preventDefault()
+    dispatch(ShowLoading())
     const response = await login({email, password})
-    console.log(response.data)
+    dispatch(HideLoading())
       if(response.success){
         // setToastText("✅ Logged In Successfully")
         message.success(response.message)
@@ -35,6 +38,7 @@ const LoginPage = () => {
       }
     } catch (error) {
       // setToastText(error.message)
+      dispatch(HideLoading())
       message.error(error.message)
     }
   }
