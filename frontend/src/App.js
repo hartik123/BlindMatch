@@ -19,9 +19,11 @@ import './stylesheets/form-elements.css';
 import './stylesheets/layout.css';
 import './stylesheets/textelements.css';
 import './stylesheets/theme.css';
+import ChatBotComponent from "./components/ChatBotComponent";
 
 function App() {
   const {loading} = useSelector(state=>state.loaders);
+
   return (
     <div>
       <Router>
@@ -36,6 +38,7 @@ function App() {
         </Routes>
         <FooterComponent />
       </Router>
+      <ChatBotComponent />
     </div>
   );
 }
