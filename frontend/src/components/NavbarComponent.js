@@ -31,35 +31,18 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import app_logo from "../assets/images/app-logo.jpg";
 import { userInfo } from "../apicalls/users";
+import { useDispatch, useSelector } from 'react-redux'
+import { SetInitialUser } from "../redux/usersSlice";
 
 function NavbarComponent() {
-  const [user, setUser] = useState();
-  const [toastText, setToastText] = useState('');
+  // const [user, setUser] = useState();
+  // const [toastText, setToastText] = useState('');
   const {pathname} = useLocation();
   const navigate = useNavigate();
-
-  const getData = async () => {
-    try {
-      const response = await userInfo();
-      if (response.success) {
-        setUser(response.data);
-        console.log(user)
-        setToastText(response.message);
-      } else {
-        setToastText(response.message);
-        navigate("/login");
-      }
-    } catch (err) {
-      setToastText(err.message);
-      navigate("/login");
-    }
-  };
-
+  const dispatch = useDispatch();
+  const {user} = useSelector(state=>state.users);
   useEffect(() => {
-    if(localStorage.getItem('token')){
-      getData()
-    }
-  }, []);
+  }, [user]);
 
   return (
     <Navbar collapseOnSelect expand="lg">
@@ -93,7 +76,7 @@ function NavbarComponent() {
                 user &&
                 <Nav.Link onClick={()=>{
                   localStorage.removeItem("token")
-                  setUser()
+                  dispatch(SetInitialUser())
                   navigate('/')
                 }} className="btn btn-danger text-white mx-3">
                   Log out

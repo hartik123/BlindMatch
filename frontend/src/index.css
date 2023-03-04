@@ -27,3 +27,8 @@ code {
 .login-signup:hover{
   font-weight: 500;
 }
+
+.wh-80{
+  height: 80px !important;
+  width: 80px !important;
+ }

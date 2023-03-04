@@ -1,28 +1,36 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import { userInfo } from '../apicalls/users';
+import { message } from 'antd';
+import { SetUser, ReloadUser } from '../redux/usersSlice';
+import { HideLoading, ShowLoading } from '../redux/loadersSlice';
+
 
 const ProtectedRoute = ({children}) => {
 
-    const [user, setUser] = useState({})
-    const [toastText, setToastText] = useState('')
+    // const [user, setUser] = useState({})
     const navigate = useNavigate()
-
-
+    const dispatch = useDispatch()
+    const {user,reloadUser} = useSelector((state)=>state.users)
     const getData =async() =>{
         try{
+            dispatch(ShowLoading())
             const response = await userInfo()
+            dispatch(HideLoading())
             if(response.success){
-                setUser(response.data)
-                setToastText(response.message)
+                dispatch(SetUser(response.data));
+                message.success(response.message);
             }
             else{
-                setToastText(response.message)
+                message.error(response.message)
                 navigate('/login')
             }
+            dispatch(ReloadUser(false))
         }
         catch(err){
-            setToastText(err.message)
+            dispatch(HideLoading())
+            message.error(err.message)
             navigate('/login')
         }
     }
@@ -38,6 +46,12 @@ const ProtectedRoute = ({children}) => {
             navigate('/')
         }
     })
+
+    useEffect(()=>{
+        if(reloadUser){
+         getData()
+        }
+     },[reloadUser])
 
   return (
     user && <div>{children}</div>
