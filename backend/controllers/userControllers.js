@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const register = async (req, res) => {
   try {
     // check if user already exists
-    let user = await User.findOne({ email: req.body.email, mobile: req.body.mobile });
+    let user = await User.findOne({ email: req.body.email, phoneno: req.body.phoneno });
     if (user) {
       return res.send({
         success: false,
@@ -21,7 +21,7 @@ const register = async (req, res) => {
     const newUser = new User(req.body);
     await newUser.save();
     var otp = Math.floor(1000 + Math.random() * 9000);
-    var response = await sendMobileOtp({ mobile: newUser.mobile, otp: otp });
+    var response = await sendMobileOtp({ phoneno: newUser.phoneno, otp: otp });
     newUser.mobOtp = response.config.params.variables_values;
     await newUser.save();
 
@@ -104,6 +104,7 @@ const login = async (req, res) => {
 const verify = async (req, res) => {
   try {
     //check if user exists
+    console.log(req.body)
     let user = await User.findOne({ _id: req.body.newUserId });
     if (!user) {
       return res.send({
