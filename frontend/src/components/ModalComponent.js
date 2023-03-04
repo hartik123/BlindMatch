@@ -1,9 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
+import { message } from 'antd'
+import { verify } from "../apicalls/users";
+import { useNavigate } from "react-router-dom";
 
 const ModalComponent = (props) => {
-
+  const navigate = useNavigate();
+  const [otp, setOtp] = useState();
+  const getVerified = async(payload) => {
+    try{
+      const response = await verify(payload);
+      console.log(payload)
+      if(response.success){
+        message.success(response.message)
+        props.setUserId('')
+        setOtp()
+        navigate("/login")
+      }
+      else{
+        message.error(response.message)
+        props.setUserId('')
+        setOtp()
+      }
+    }
+    catch(error){
+      message.error(error.message)
+      props.setUserId('')
+      setOtp()
+    }
+  }
   return (
     <Modal
       {...props}
@@ -19,11 +45,17 @@ const ModalComponent = (props) => {
       <Modal.Body>
         <center>
         <b>Enter OTP: </b>
-        <input type="text" maxLength={4}/>
+        <input type="number" maxLength={4} value={otp} onChange={(e)=>setOtp(Number(e.target.value))}/>
         </center>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.onHide}>Submit</Button>
+        <Button onClick={()=>{
+          getVerified({
+            newUserId: props.userId,
+            otp: otp
+          })
+          console.log(props.userId)
+        }}>Submit</Button>
       </Modal.Footer>
     </Modal>
   );

@@ -13,31 +13,32 @@ const SignUpPage = () => {
 
   
   AOS.init();
-  const [modalShow, setModalShow] = React.useState(false);
-  const [name, setName] = useState("hartik");
-  const [email, setEmail] = useState("hartik@gmail.com");
-  const [phoneno, setPhoneno] = useState(63477);
-  const [password, setPassword] = useState("1234");
-  const [confirmPassword, setConfirmPassword] = useState("1234");
+  const [modalShow, setModalShow] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneno, setPhoneNo] = useState();
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [userId, setUserId] = useState('');
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
-
+    e.preventDefault();
     try {
-      e.preventDefault();
-
       //Setting Model
-
       if (password === confirmPassword){
         const response = await register({
             name,
             email,
             password,
+            phoneno
           });
 
           if(response.success){
             message.success(response.message)
-            navigate('/login')
+            console.log(response.data)
+            setUserId(response.data)
+            console.log(userId)
           }
           else{
             message.error(response.message)
@@ -89,7 +90,7 @@ const SignUpPage = () => {
                 placeholder="Enter phone no"
                 value={phoneno}
                 required={true}
-                onChange={(e) => setPhoneno(e.target.value)}
+                onChange={(e) => setPhoneNo(e.target.value)}
               />
               <Form.Text className="text-muted"></Form.Text>
             </Form.Group>
@@ -150,6 +151,8 @@ const SignUpPage = () => {
       <ModalComponent
         show={modalShow}
         onHide={() => setModalShow(false)}
+        userId={userId}
+        setUserId={setUserId}
       />
     </Container>
   );

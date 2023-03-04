@@ -29,3 +29,13 @@ export const userInfo = async()=>{
         return error.response.data
     }
 }
+
+export const verify = async(payload)=>{
+    try {
+        const response = await axiosInstance.post('/api/users/verify',payload)
+        return response.data
+        
+    } catch (error) {
+        return error.response.data
+    }
+}

@@ -6,10 +6,7 @@ const jwt = require("jsonwebtoken");
 const register = async (req, res) => {
   try {
     // check if user already exists
-    let user = await User.findOne({
-      email: req.body.email,
-      mobile: req.body.mobile,
-    });
+    let user = await User.findOne({ email: req.body.email, phoneno: req.body.phoneno });
     if (user) {
       return res.send({
         success: false,
@@ -24,7 +21,7 @@ const register = async (req, res) => {
     const newUser = new User(req.body);
     await newUser.save();
     var otp = Math.floor(1000 + Math.random() * 9000);
-    var response = await sendMobileOtp({ mobile: newUser.mobile, otp: otp });
+    var response = await sendMobileOtp({ phoneno: newUser.phoneno, otp: otp });
     newUser.mobOtp = response.config.params.variables_values;
     await newUser.save();
 
@@ -107,6 +104,7 @@ const login = async (req, res) => {
 const verify = async (req, res) => {
   try {
     //check if user exists
+    console.log(req.body)
     let user = await User.findOne({ _id: req.body.newUserId });
     if (!user) {
       return res.send({
@@ -142,17 +140,18 @@ const verify = async (req, res) => {
 
 const forgotPassword = async (req, res) => {
   try {
-    let mobile = req.body.mobile;
+    let phoneno = req.body.phoneno;
     let user = await User.findOne({
-      mobile: mobile,
+      phoneno: phoneno,
     });
     if (user) {
       var otp = Math.floor(1000 + Math.random() * 9000);
-      var response = await sendMobileOtp({ mobile: mobile, otp: otp });
+      var response = await sendMobileOtp({ phoneno: phoneno, otp: otp });
       user.mobOtp = response.config.params.variables_values;
+      user.save();
       return res.send({
         success: true,
-        data: mobile,
+        data: phoneno,
         message: "OTP sent!",
       });
     } else {
@@ -173,13 +172,18 @@ const forgotPassword = async (req, res) => {
 
 const changePassword = async (req, res) => {
   try {
-    let mobile = req.body.mobile;
+    let phoneno = req.body.phoneno;
     let user = await User.findOne({
-      mobile: mobile,
+      phoneno: phoneno,
     });
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(req.body.newPassword, salt);
     await user.save();
+    res.send({
+      message: "Password changed successfully",
+      success: true,
+      data: null,
+    });
   } catch (error) {
     res.send({
       message: error.message,
