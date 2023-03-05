@@ -107,6 +107,7 @@ const ChatArea = ({socket}) => {
   }
 
   useEffect(() => {
+    
     getMessages();
     if (selectedChat?.lastMessage?.sender !== user._id) {
       clearUnreadMessages();

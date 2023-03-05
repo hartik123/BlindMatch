@@ -1,13 +1,11 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import { Container, Row } from "react-bootstrap";
 
-import app_logo from "../assets/images/app-logo.jpg";
 import HomePageCard from "../components/HomePageCard";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import landingBackgroundImage from "../assets/images/landingBackground.gif";
+import landingBackgroundImage from "../assets/images/banner.jpg";
 import Safety from "../assets/landingPageImage/safety.png";
 import Smart from "../assets/landingPageImage/smart.png";
 import Need from "../assets/landingPageImage/need.png";
@@ -48,34 +46,45 @@ const LandingPage = () => {
     >
       <Container
         fluid={true}
+        className="p-0"
         style={{
           height: "400px",
-          display: "flex",
-          justifyContent: "center",
-          backgroundImage: `url(${landingBackgroundImage})`,
+          background: `url(${landingBackgroundImage})`,
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
           backgroundSize: "cover",
         }}
         data-aos="fade-down"
       >
-        <Container fluid={true} className="mt-5 text-center">
-          <h2 className="mt-4">
-            We are glad that we are supporting the community...
-          </h2>
-          <p className="px-5 mx-5">
-            At vero eos et accusamus et iusto odio dignissimos ducimus qui
-            blanditiis praesentium voluptatum deleniti atque corrupti quos
-            dolores et quas molestias excepturi sint occaecati <br />
-          </p>
-          <Button
-            variant="primary"
-            onClick={() => navigate("/login")}
-            className="mb-5"
-          >
-            Log In Now
-          </Button>
-        </Container>
+        <div
+          style={{
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+            position: "relative",
+            zIndex: "1",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Container fluid={true} className="m-3 m-md-5 text-center p-5">
+            <h1 className="mt-4 text-white">
+              Meet someone new without any preconceptions
+            </h1>
+            <p className="px-5 my-3 mx-5 text-white d-none d-sm-block">
+              Let your heart lead the way with our blind dating platform <br />
+            </p>
+            <button
+              type="button"
+              onClick={() => navigate("/login")}
+              className="btn btn-outline-light mt-4 mt-sm-1"
+            >
+              Let's Explore
+            </button>
+          </Container>
+        </div>
       </Container>
 
       <h2 className="text-center my-4">Our features</h2>

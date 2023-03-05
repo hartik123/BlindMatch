@@ -75,13 +75,13 @@ const ChatBotComponent = () => {
       ];
 
       const theme = {
-        background: '#d398d4',
-        headerBgColor: '#cf58d1',
+        background: '#DCDBDB',
+        headerBgColor: '#ff5165',
         headerFontSize: '20px',
-        botBubbleColor: '#772eab',
+        botBubbleColor: '#171E93',
         headerFontColor: 'white',
         botFontColor: 'white',
-        userBubbleColor: '#a85dde',
+        userBubbleColor: '#ff5165',
         userFontColor: 'white',
     };
 

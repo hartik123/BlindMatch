@@ -6,7 +6,10 @@ const jwt = require("jsonwebtoken");
 const register = async (req, res) => {
   try {
     // check if user already exists
-    let user = await User.findOne({ email: req.body.email, phoneno: req.body.phoneno });
+    let user = await User.findOne({
+      email: req.body.email,
+      phoneno: req.body.phoneno,
+    });
     if (user) {
       return res.send({
         success: false,
@@ -104,7 +107,7 @@ const login = async (req, res) => {
 const verify = async (req, res) => {
   try {
     //check if user exists
-    console.log(req.body)
+    console.log(req.body);
     let user = await User.findOne({ _id: req.body.newUserId });
     if (!user) {
       return res.send({
@@ -170,14 +173,43 @@ const forgotPassword = async (req, res) => {
   }
 };
 
-const changePassword = async (req, res) => {
+const checkOtp = async (req, res) => {
   try {
-    let phoneno = req.body.phoneno;
+    let { phoneno, otp } = req.body;
+    console.log(phoneno, otp);
+    let user = await User.findOne({
+      phoneno: phoneno,
+    });
+    if (user.mobOtp == otp) {
+      return res.send({
+        success: true,
+        data: null,
+        message: "OTP verified successfully!",
+      });
+    } else {
+      return res.send({
+        success: false,
+        data: null,
+        message: "Invalid OTP!",
+      });
+    }
+  } catch (error) {
+    res.send({
+      message: error.message,
+      data: error,
+      success: false,
+    });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  try {
+    let { phoneno, newPass1 } = req.body;
     let user = await User.findOne({
       phoneno: phoneno,
     });
     const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(req.body.newPassword, salt);
+    user.password = await bcrypt.hash(newPass1, salt);
     await user.save();
     res.send({
       message: "Password changed successfully",
@@ -276,7 +308,8 @@ module.exports = {
   login,
   verify,
   forgotPassword,
-  changePassword,
+  checkOtp,
+  resetPassword,
   getUserInfo,
   getAllUsers,
   updateProfile

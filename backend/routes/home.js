@@ -6,7 +6,8 @@ const {
   register,
   verify,
   forgotPassword,
-  changePassword,
+  checkOtp,
+  resetPassword,
   getUserInfo,
   getAllUsers,
   updateProfile
@@ -18,8 +19,8 @@ router.post("/login", login);
 router.post("/register", register);
 router.post("/verify", verify);
 router.post("/forgotPassword", forgotPassword);
-router.post("/changePassword", changePassword);
-
+router.post("/checkOtp", checkOtp);
+router.post("/resetPassword", resetPassword);
 router.get("/getuserinfo", authMiddleware, getUserInfo);
 router.get('/getallusers', authMiddleware, getAllUsers);
 router.post("/update-profile-picture", authMiddleware, updateProfile);
