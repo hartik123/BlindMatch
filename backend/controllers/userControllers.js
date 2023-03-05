@@ -242,6 +242,35 @@ const getAllUsers = async(req, res)=>{
   }
 }
 
+const updateProfile = async (req, res)=>{
+      try {
+        // const uploadResponse = await cloudinary.v2.uploader.upload(req.body.image, {
+        //   folder: "sheychat_udemy",
+        //   use_filename: true,
+        // });
+    
+        // req.body.image = uploadResponse.url;
+
+        const {gender, location} = req.body
+        await User.findByIdAndUpdate(req.body.userid, {
+          gender: gender,
+          location: location
+        });
+
+        res.send({
+          message: "Profile updated successfully",
+          success: true,
+          data: "",
+        });
+      } catch (error) {
+        res.status(500).send({
+          message: error.message,
+          data: error,
+          success: false,
+        });
+      }
+}
+
 module.exports = {
   register,
   login,
@@ -249,5 +278,6 @@ module.exports = {
   forgotPassword,
   changePassword,
   getUserInfo,
-  getAllUsers
+  getAllUsers,
+  updateProfile
 };

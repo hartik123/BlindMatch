@@ -49,3 +49,12 @@ export const getAllUsers = async()=>{
         return error.response.data
     }
 } 
+
+export const UpdateProfilePicture = async (payload) => {
+    try {
+      const response = await axiosInstance.post("/api/users/update-profile-picture", payload);
+      return response.data;
+    } catch (error) {
+      return error.response.data;
+    }
+  }

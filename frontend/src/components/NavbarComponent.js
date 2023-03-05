@@ -33,6 +33,8 @@ import app_logo from "../assets/images/app-logo.jpg";
 import { userInfo } from "../apicalls/users";
 import { useDispatch, useSelector } from 'react-redux'
 import { SetAllChatsInitial, SetAllUsersInitial, SetInitialUser, SetSelectedChatInitial } from "../redux/usersSlice";
+import ProfileComponent from "./ProfileComponent";
+
 
 function NavbarComponent() {
   // const [user, setUser] = useState();
@@ -41,6 +43,8 @@ function NavbarComponent() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {user} = useSelector(state=>state.users);
+  const [showProfileModal, setShowProfileModal] = useState(false);
+
   useEffect(() => {
   }, [user]);
 
@@ -61,7 +65,7 @@ function NavbarComponent() {
               </Nav.Link>
             </LinkContainer>
             {user ? (
-              <Nav.Link><i className="ri-user-line"></i> {user.name}</Nav.Link>
+              <Nav.Link><i className="ri-user-line" onClick={()=>setShowProfileModal(true)}></i> {user.name}</Nav.Link>
             ) : (
               <LinkContainer to="/login">
                 <Nav.Link
@@ -89,6 +93,7 @@ function NavbarComponent() {
           </Nav>
         </Navbar.Collapse>
       </Container>
+      {showProfileModal && <ProfileComponent showProfileModal={showProfileModal} setShowProfileModal={setShowProfileModal}/>}
     </Navbar>
   );
 }
