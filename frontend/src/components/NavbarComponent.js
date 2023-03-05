@@ -1,24 +1,24 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { LinkContainer } from "react-router-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import app_logo from "../assets/images/app-logo.png";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  SetAllChatsInitial,
-  SetAllUsersInitial,
-  SetInitialUser,
-  SetSelectedChatInitial,
-} from "../redux/usersSlice";
+import { useDispatch, useSelector } from 'react-redux'
+import { SetAllChatsInitial, SetAllUsersInitial, SetInitialUser, SetSelectedChatInitial } from "../redux/usersSlice";
+import ProfileComponent from "./ProfileComponent";
+
 
 function NavbarComponent(props) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.users);
-  useEffect(() => {}, [user]);
+  const {user} = useSelector(state=>state.users);
+  const [showProfileModal, setShowProfileModal] = useState(false);
+
+  useEffect(() => {
+  }, [user]);
 
   const logoutHandler = async (e) => {
     props.setProgress(30);
@@ -104,7 +104,7 @@ function NavbarComponent(props) {
                     aria-labelledby="nav-dropdown-btn"
                   >
                     <li>
-                      <a class="dropdown-item" href="/account">
+                      <a class="dropdown-item" onClick={()=>setShowProfileModal(true)}>
                         <i class="fas fa-user-circle"></i> View profile
                       </a>
                     </li>
@@ -121,6 +121,7 @@ function NavbarComponent(props) {
           </Nav>
         </Navbar.Collapse>
       </Container>
+      {showProfileModal && <ProfileComponent showProfileModal={showProfileModal} setShowProfileModal={setShowProfileModal}/>}
     </Navbar>
   );
 }

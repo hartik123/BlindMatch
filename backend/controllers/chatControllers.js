@@ -12,6 +12,7 @@ const createNewChat = async(req,res) => {
         message: "Chat created successfully",
         data: savedChat
      }) 
+     
     }
     catch(error){
     res.send({

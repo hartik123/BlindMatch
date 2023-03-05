@@ -10,8 +10,10 @@ const {
   resetPassword,
   getUserInfo,
   getAllUsers,
+  updateProfile
 } = require("../controllers/userControllers");
 const authMiddleware = require("../middlewares/authMiddleware");
+
 
 router.post("/login", login);
 router.post("/register", register);
@@ -21,5 +23,6 @@ router.post("/checkOtp", checkOtp);
 router.post("/resetPassword", resetPassword);
 router.get("/getuserinfo", authMiddleware, getUserInfo);
 router.get('/getallusers', authMiddleware, getAllUsers);
+router.post("/update-profile-picture", authMiddleware, updateProfile);
 
 module.exports = router;

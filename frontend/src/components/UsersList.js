@@ -49,13 +49,14 @@ const UsersList = ({socket, searchKey, onlineUsers}) => {
     //  return allUsers.filter((userObj,index)=>(userObj.name.toLowerCase().includes(searchKey.toLowerCase()) && searchKey) || (allChats.some((chat)=>chat.members.map((mem)=>mem._id).includes(userObj._id))))
     // if search key is empty then return all chats else return filtered chats and users
     try {
-      if (searchKey === "") {
-        return allChats || [];
-      }
-      return allUsers.filter(
-        (user) =>
-          user.name.toLowerCase().includes(searchKey.toLowerCase()) || []
-      );
+        if (searchKey === "") {
+          return allChats || [];
+        }
+        return allUsers.filter(
+          (user) =>
+            user.name.toLowerCase().includes(searchKey.toLowerCase()) || []
+        );
+
     } catch (error) {
       return [];
     }  
@@ -162,6 +163,7 @@ const UsersList = ({socket, searchKey, onlineUsers}) => {
       {
         
       getData().map((chatObjOrUserObj,index)=>{
+        console.log("Chat obj:", chatObjOrUserObj)
         let userObj = chatObjOrUserObj
 
         if (chatObjOrUserObj.members) {
@@ -169,6 +171,7 @@ const UsersList = ({socket, searchKey, onlineUsers}) => {
             (mem) => mem._id !== user._id
           );
         }
+
         return(
           <div className={`shadow-sm border p-2 rounded-xl bg-white flex justify-between items-center cursor-pointer w-full ${getIsSelectedChatOrNot(userObj)&&"border-primary border-2"}`} key={userObj._id} onClick={()=>openChat(userObj._id)}>
             <div className='flex gap-5 items-center'>

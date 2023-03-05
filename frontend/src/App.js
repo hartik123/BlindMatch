@@ -22,11 +22,9 @@ function App() {
   return (
     <div>
       <Router>
-        {loading && (
-          <LoadingBar height={3} color="#A5074D" progress={progress} />
-        )}
-        <NavbarComponent setProgress={setProgress} />
-
+        {loading && <LoadingBar height={3} color="#A5074D" progress={progress} />}
+        <NavbarComponent setProgress={setProgress}/>
+        
         <Routes>
           <Route
             path="/"

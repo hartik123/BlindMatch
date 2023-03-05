@@ -2,6 +2,7 @@ const User = require("../models/userModel.js");
 const bcrypt = require("bcryptjs");
 const { sendMobileOtp } = require("../utils/mobileOtp");
 const jwt = require("jsonwebtoken");
+const userModel = require("../models/userModel.js");
 
 const register = async (req, res) => {
   try {
@@ -274,6 +275,41 @@ const getAllUsers = async(req, res)=>{
   }
 }
 
+const updateProfile = async (req, res)=>{
+      try {
+        // const uploadResponse = await cloudinary.v2.uploader.upload(req.body.image, {
+        //   folder: "sheychat_udemy",
+        //   use_filename: true,
+        // });
+    
+        // req.body.image = uploadResponse.url;
+        console.log(req.body)
+        const {gender, location, interest} = req.body
+        // await User.findByIdAndUpdate(req.body.userid, {
+        //   gender: gender,
+        //   location: location
+        // });
+
+        const user = await User.findOne({_id: req.body.userid})
+        user.gender = gender
+        user.location = location
+        user.interest = interest
+        await user.save()
+
+        res.send({
+          message: "Profile updated successfully",
+          success: true,
+          data: "",
+        });
+      } catch (error) {
+        res.status(500).send({
+          message: error.message,
+          data: error,
+          success: false,
+        });
+      }
+}
+
 module.exports = {
   register,
   login,
@@ -282,5 +318,6 @@ module.exports = {
   checkOtp,
   resetPassword,
   getUserInfo,
-  getAllUsers
+  getAllUsers,
+  updateProfile
 };

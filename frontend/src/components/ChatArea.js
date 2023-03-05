@@ -76,7 +76,7 @@ const ChatArea = ({socket}) => {
     }
     // if date is this year return date and time in MMM DD hh:mm format
     else if (moment(date).isSame(moment(), "year")) {
-      result = moment(date).format("MMM DD hh:mm A");
+      result = moment(date).format("M/D/YYYY hh:mm A");
     }
 
     return result;
@@ -107,14 +107,13 @@ const ChatArea = ({socket}) => {
   }
 
   useEffect(() => {
-    
     getMessages();
     if (selectedChat?.lastMessage?.sender !== user._id) {
       clearUnreadMessages();
     }
 
     // receive message from server using socket
-    socket.on("receive-message", (message1) => {
+    socket.off("receive-message").on("receive-message", (message1) => {
       const tempSelectedChat = store.getState().users.selectedChat;
       if (tempSelectedChat._id === message1.chat) {
         setMessages((messages) => [...messages, message1]);
@@ -161,7 +160,7 @@ const ChatArea = ({socket}) => {
     // // receipent typing
     socket.on("started-typing", (data) => {
       console.log(data)
-      // const selectedChat = store.getState().users.selectedChat;
+      const selectedChat = store.getState().users.selectedChat;
       // if (data.chat === selectedChat._id && data.sender !== user._id) {
       //   setIsReceipentTyping(true);
       // }

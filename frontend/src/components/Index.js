@@ -15,11 +15,11 @@ const Index = () => {
     // join the room
     if (user) {
       socket.emit("join-room", user._id);
-      // socket.emit("came-online", user._id);
+      socket.emit("came-online", user._id);
 
-      // socket.on("online-users-updated", (users) => {
-      //   setOnlineUsers(users);
-      // });
+      socket.on("online-users-updated", (users) => {
+        setOnlineUsers(users);
+      });
     }
   }, [user]);
 
