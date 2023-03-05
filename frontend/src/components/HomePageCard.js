@@ -1,22 +1,20 @@
-import React from 'react'
-import { Col } from 'react-bootstrap'
+import React from "react";
+import { Col } from "react-bootstrap";
 
-import AOS from 'aos'
-import 'aos/dist/aos.css'
+import AOS from "aos";
+import "aos/dist/aos.css";
 
-
-
-const HomePageCard = ({image}) => {
-  AOS.init()
+const HomePageCard = ({ ele }) => {
+  AOS.init();
   return (
-    <Col md={3} className="display-flex" data-aos='zoom-in' >
-        <img src={image} width="200" height="200" alt="Alternate"/>
-        <h4 className='mt-2'>Title: Feature 1</h4>
-        <div>
-            <p>Text: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati </p>
-        </div>
+    <Col md={3} className="display-flex" data-aos="zoom-in">
+      <img src={ele.img} width="200" height="200" alt="alternate" />
+      <h4 className="mt-2">{ele.title}</h4>
+      <div>
+        <p>{ele.text}</p>
+      </div>
     </Col>
-  )
-}
+  );
+};
 
-export default HomePageCard
+export default HomePageCard;

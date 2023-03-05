@@ -9,6 +9,7 @@ const {
   checkOtp,
   resetPassword,
   getUserInfo,
+  getAllUsers,
 } = require("../controllers/userControllers");
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -19,5 +20,6 @@ router.post("/forgotPassword", forgotPassword);
 router.post("/checkOtp", checkOtp);
 router.post("/resetPassword", resetPassword);
 router.get("/getuserinfo", authMiddleware, getUserInfo);
+router.get('/getallusers', authMiddleware, getAllUsers);
 
 module.exports = router;

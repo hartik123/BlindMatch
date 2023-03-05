@@ -14,16 +14,24 @@ import Catify from "../assets/landingPageImage/catify.png";
 const LandingPage = () => {
   const cardData = [
     {
-      img: Safety,
-    },
-    {
-      img: Smart,
-    },
-    {
       img: Need,
+      title: "NEED FOR SPEED",
+      text: "Say the magic word, and we offer speedy meet ups with people of your handpicked preferences!"
+    },
+    {
+      img:  Safety,
+      title: "SAFETY IS SEXY",
+      text: "Location of meet up will be a public popular place. Your safety is our first priority."
     },
     {
       img: Catify,
+      title: "CATFISH PROOFED",
+      text: "Fakers can fake elsewhere. Our app provides you a space for real interactions with genuine people."
+    },
+    {
+      img: Smart,
+      title: "SMART SOCIALIZING",
+      text: "Hit the 'Nearby' option to hang out with somebody at any time of the day! You are never alone in this world."
     },
   ];
 
@@ -84,7 +92,7 @@ const LandingPage = () => {
       <Container className="text-center">
         <Row>
           {cardData.map((ele, idx) => {
-            return <HomePageCard key={idx} image={ele.img} />;
+            return <HomePageCard key={idx} ele={ele} />;
           })}
         </Row>
       </Container>

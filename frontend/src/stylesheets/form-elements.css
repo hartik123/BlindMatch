@@ -1,0 +1,65 @@
+input,
+select {
+  height: 40px !important;
+  padding: 10px 20px !important;
+  border: 1px solid rgb(131, 130, 130) !important;
+  width: 100% !important;
+  border-radius: 3px;
+}
+
+input:focus {
+  border: 1px solid rgb(49, 49, 49) !important;
+  outline: none !important;
+}
+
+input[type="file"] {
+  border: none !important;
+}
+
+.ant-form-item {
+  margin-bottom: 10px !important;
+}
+
+button {
+  padding: 0px 25px;
+  border-radius: 2px;
+  height: 40px !important;
+  width: -webkit-fill-available !important;
+ 
+}
+.primary-contained-btn {
+  background-color: var(--primary);
+  color: white;
+  border: none !important;
+}
+
+.primary-outlined-btn {
+  background-color: white;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.border{
+  border-width: 1px
+}
+
+.upper-case{
+  text-transform: uppercase;
+}
+
+.text-2xl{
+  font-size: 1.5rem; /* 24px */
+line-height: 2rem;
+}
+
+.font-semibold{
+  font-weight: 600;
+}
+
+.rounded-2xl{
+  border-radius: 1rem;
+}
+
+.rounded-md{
+  border-radius: 0.375rem;
+}

@@ -5,8 +5,8 @@ import Navbar from "react-bootstrap/Navbar";
 import { LinkContainer } from "react-router-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import app_logo from "../assets/images/app-logo.png";
-import { useDispatch, useSelector } from "react-redux";
-import { SetInitialUser } from "../redux/usersSlice";
+import { useDispatch, useSelector } from 'react-redux'
+import { SetAllChatsInitial, SetAllUsersInitial, SetInitialUser } from "../redux/usersSlice";
 
 function NavbarComponent() {
 
@@ -24,8 +24,7 @@ function NavbarComponent() {
         <Navbar.Brand>
           <LinkContainer to="/">
             <Nav.Link to="/" active={pathname === "/" ? true : false}>
-              <img src={app_logo} width={50} height={50} className="mx-2" alt="App_Logo"/>
-              BlindMatch
+              <span><img src={app_logo} width={50} height={50} className="mx-2 d-inline" alt="App_Logo"/>BlindMatch</span>
             </Nav.Link>
           </LinkContainer>
         </Navbar.Brand>
@@ -53,18 +52,19 @@ function NavbarComponent() {
                 </Nav.Link>
               </LinkContainer>
             )}
-            {user && (
-              <Nav.Link
-                onClick={() => {
-                  localStorage.removeItem("token");
-                  dispatch(SetInitialUser());
-                  navigate("/");
-                }}
-                className="btn btn-danger text-white mx-3"
-              >
-                Log out
-              </Nav.Link>
-            )}
+              {
+                user &&
+                <Nav.Link onClick={()=>{
+                  localStorage.removeItem("token")
+                  dispatch(SetInitialUser())
+                  dispatch(SetAllUsersInitial())
+                  dispatch(SetAllChatsInitial())
+                  navigate('/')
+                }} className="btn btn-danger text-white mx-3">
+                  Log out
+                </Nav.Link>
+                }
+
           </Nav>
         </Navbar.Collapse>
       </Container>
