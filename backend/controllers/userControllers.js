@@ -2,6 +2,7 @@ const User = require("../models/userModel.js");
 const bcrypt = require("bcryptjs");
 const { sendMobileOtp } = require("../utils/mobileOtp");
 const jwt = require("jsonwebtoken");
+const userModel = require("../models/userModel.js");
 
 const register = async (req, res) => {
   try {
@@ -282,12 +283,18 @@ const updateProfile = async (req, res)=>{
         // });
     
         // req.body.image = uploadResponse.url;
+        console.log(req.body)
+        const {gender, location, interest} = req.body
+        // await User.findByIdAndUpdate(req.body.userid, {
+        //   gender: gender,
+        //   location: location
+        // });
 
-        const {gender, location} = req.body
-        await User.findByIdAndUpdate(req.body.userid, {
-          gender: gender,
-          location: location
-        });
+        const user = await User.findOne({_id: req.body.userid})
+        user.gender = gender
+        user.location = location
+        user.interest = interest
+        await user.save()
 
         res.send({
           message: "Profile updated successfully",

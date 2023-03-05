@@ -22,7 +22,6 @@ function App() {
   return (
     <div>
       <Router>
-        {loading && <Loaders />}
         <NavbarComponent />
         <LoadingBar height={3} color="#A5074D" progress={progress} />
         <Routes>

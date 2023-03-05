@@ -15,7 +15,8 @@ const userSchema = new mongoose.Schema(
       required: false,
     },
     gender: { type: String, required: false, default: "" },
-    location: {type: String, required: false, default: "mumbai"}
+    location: {type: String, required: false, default: "mumbai"},
+    interest: {type: Object, required: false, default: {}}
   },
   {
     timestamps: true,

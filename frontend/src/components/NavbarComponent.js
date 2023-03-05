@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -44,7 +44,7 @@ function NavbarComponent() {
               </Nav.Link>
             </LinkContainer>
             {user ? (
-              <Nav.Link><i className="ri-user-line" onClick={()=>setShowProfileModal(true)}></i> {user.name}</Nav.Link>
+              <Nav.Link onClick={()=>setShowProfileModal(true)}><i className="ri-user-line"></i> {user.name}</Nav.Link>
             ) : (
               <LinkContainer to="/login">
                 <Nav.Link

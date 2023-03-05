@@ -14,20 +14,20 @@ const Index = () => {
          // join the room
     if (user) {
       socket.emit("join-room", user._id);
-      // socket.emit("came-online", user._id);
+      socket.emit("came-online", user._id);
 
-      // socket.on("online-users-updated", (users) => {
-      //   setOnlineUsers(users);
-      // });
+      socket.on("online-users-updated", (users) => {
+        setOnlineUsers(users);
+      });
     }
    },[user])
 
   return (
-    <div className='flex gap-5'>
+    <div className='flex gap-5 mt-4'>
         <div className='w-96'>
             <UserSearch  searchKey={searchKey} setSearchKey={setSearchKey} />
             <UsersList searchKey={searchKey} socket={socket}
-          onlineUsers={onlineUsers}/>
+          onlineUsers={onlineUsers} />
         </div>
         {selectedChat && <div className='w-full'>
             <ChatArea socket={socket}/>
