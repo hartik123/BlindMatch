@@ -87,7 +87,7 @@ const LandingPage = () => {
         </div>
       </Container>
 
-      <h2 className="text-center my-4">Our features</h2>
+      <h2 className="text-center my-4">Our Features</h2>
 
       <Container className="text-center">
         <Row>

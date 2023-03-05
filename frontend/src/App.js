@@ -22,9 +22,11 @@ function App() {
   return (
     <div>
       <Router>
-        {loading && <Loaders />}
-        <NavbarComponent setProgress={setProgress}/>
-        <LoadingBar height={3} color="#A5074D" progress={progress} />
+        {loading && (
+          <LoadingBar height={3} color="#A5074D" progress={progress} />
+        )}
+        <NavbarComponent setProgress={setProgress} />
+
         <Routes>
           <Route
             path="/"
@@ -72,7 +74,7 @@ function App() {
             path="/home"
             element={
               <ProtectedRoute>
-                <HomePage setProgress={setProgress}/>
+                <HomePage setProgress={setProgress} />
               </ProtectedRoute>
             }
           />
