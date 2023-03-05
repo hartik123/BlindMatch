@@ -88,7 +88,6 @@ const ChatBotComponent = () => {
     const config ={
       headerTitle:"Connect us",
       floating: true,
-      speechSynthesis:{ enable: true, lang: 'en' }
     }
 
   return (

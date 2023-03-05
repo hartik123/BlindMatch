@@ -32,7 +32,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import app_logo from "../assets/images/app-logo.jpg";
 import { userInfo } from "../apicalls/users";
 import { useDispatch, useSelector } from 'react-redux'
-import { SetAllChatsInitial, SetAllUsersInitial, SetInitialUser } from "../redux/usersSlice";
+import { SetAllChatsInitial, SetAllUsersInitial, SetInitialUser, SetSelectedChatInitial } from "../redux/usersSlice";
 
 function NavbarComponent() {
   // const [user, setUser] = useState();
@@ -79,6 +79,7 @@ function NavbarComponent() {
                   dispatch(SetInitialUser())
                   dispatch(SetAllUsersInitial())
                   dispatch(SetAllChatsInitial())
+                  dispatch(SetSelectedChatInitial())
                   navigate('/')
                 }} className="btn btn-danger text-white mx-3">
                   Log out
