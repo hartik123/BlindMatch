@@ -14,13 +14,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 import { useSelector } from "react-redux";
 import Loaders from "./components/Loaders";
-import './stylesheets/alignments.css';
-import './stylesheets/chat.css';
-import './stylesheets/custom-components.css';
-import './stylesheets/form-elements.css';
-import './stylesheets/layout.css';
-import './stylesheets/textelements.css';
-import './stylesheets/theme.css';
 import ChatBotComponent from "./components/ChatBotComponent";
 
 function App() {

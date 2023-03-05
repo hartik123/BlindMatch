@@ -6,7 +6,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import app_logo from "../assets/images/app-logo.png";
 import { useDispatch, useSelector } from 'react-redux'
-import { SetAllChatsInitial, SetAllUsersInitial, SetInitialUser } from "../redux/usersSlice";
+import { SetAllChatsInitial, SetAllUsersInitial, SetInitialUser, SetSelectedChatInitial } from "../redux/usersSlice";
 
 function NavbarComponent() {
 
@@ -59,6 +59,7 @@ function NavbarComponent() {
                   dispatch(SetInitialUser())
                   dispatch(SetAllUsersInitial())
                   dispatch(SetAllChatsInitial())
+                  dispatch(SetSelectedChatInitial())
                   navigate('/')
                 }} className="btn btn-danger text-white mx-3">
                   Log out

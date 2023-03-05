@@ -1,24 +1,49 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import ChatArea from './ChatArea'
 import UserSearch from './UserSearch'
 import UsersList from './UsersList'
+import {io} from 'socket.io-client'
 
+const socket = io("http://localhost:4000")
 const Index = () => {
-
     const [searchKey, setSearchKey]= useState('')
-    const {selectedChat} = useSelector((state)=>state.users)
-    
+    const {selectedChat,user} = useSelector((state)=>state.users)
+    const [onlineUsers, setOnlineUsers] = useState([]);
+    useEffect(()=>{
+         // join the room
+    if (user) {
+      socket.emit("join-room", user._id);
+      // socket.emit("came-online", user._id);
+
+      // socket.on("online-users-updated", (users) => {
+      //   setOnlineUsers(users);
+      // });
+    }
+   },[user])
 
   return (
     <div className='flex gap-5'>
         <div className='w-96'>
-            <UserSearch  searchKey={searchKey} setSearchKey={setSearchKey}/>
-            <UsersList searchKey={searchKey}/>
+            <UserSearch  searchKey={searchKey} setSearchKey={setSearchKey} />
+            <UsersList searchKey={searchKey} socket={socket}
+          onlineUsers={onlineUsers}/>
         </div>
         {selectedChat && <div className='w-full'>
-            <ChatArea />
+            <ChatArea socket={socket}/>
         </div>}
+        {!selectedChat && (
+        <div className="w-full h-[80vh]  items-center justify-center flex bg-white flex-col">
+          <img
+            src="https://www.pngmart.com/files/16/Speech-Chat-Icon-Transparent-PNG.png"
+            alt=""
+            className="w-96 h-96"
+          />
+          <h1 className="text-2xl font-semibold text-gray-500">
+            Select a user to chat
+          </h1>
+        </div>
+      )}
     </div>
   )
 }
