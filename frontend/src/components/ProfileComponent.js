@@ -9,14 +9,14 @@ function Profile({ showProfileModal, setShowProfileModal }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.users);
   const [name, setName] = useState("");
-  const [gender, setGender] = useState("M");
+  const [gender, setGender] = useState(user.gender? user.gender : "M" );
   const [email, setEmail] = useState("");
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState(user.location);
   const [phoneno, setPhoneno] = useState("");
-  const [interestOne, setInterestOne] = useState("");
-  const [interestTwo, setInterestTwo] = useState("");
-  const [interestThree, setInterestThree] = useState("");
-  const [interestFour, setInterestFour] = useState("");
+  const [interestOne, setInterestOne] = useState(user.interest?.interestOne);
+  const [interestTwo, setInterestTwo] = useState(user.interest?.interestTwo);
+  const [interestThree, setInterestThree] = useState(user.interest?.interestThree);
+  const [interestFour, setInterestFour] = useState(user.interest?.interestFour);
 
   const [image, setimage] = useState(user.image || "");
 
@@ -119,6 +119,7 @@ function Profile({ showProfileModal, setShowProfileModal }) {
           type="text"
           placeholder="Location"
           name="location"
+          value={location}
           onChange={(e) => setLocation(e.target.value)}
           required
         />
