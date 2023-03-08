@@ -46,6 +46,11 @@ BlindMatch Web application consists of following modules/features:-
 <br>
 <br>
 
+
+https://user-images.githubusercontent.com/59147991/223704811-195fb990-b840-404a-92be-d718f912c94e.mp4
+
+
+
 ## Tech Stack 👨‍💻
 
 - FrontEnd: ReactJS, Redux, Bootstrap, React-Bootstrap, Tailwind, AntD, AOS, Socket IO Client
