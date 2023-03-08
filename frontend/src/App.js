@@ -72,7 +72,7 @@ function App() {
             path="/home"
             element={
               <ProtectedRoute>
-                <HomePage setProgress={setProgress}/>
+                <HomePage setProgress={setProgress} />
               </ProtectedRoute>
             }
           />
